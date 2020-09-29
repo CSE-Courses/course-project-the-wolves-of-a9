@@ -28,7 +28,7 @@
     "import matplotlib.pyplot as plt\n",
     "from scipy.optimize import minimize\n",
     "%matplotlib inline\n",
-    "quandl.ApiConfig.api_key = \"KHzQ6zUks1kM3GUT6dcX\""
+    "quandl.ApiConfig.api_key = \"\""
    ]
   },
   {
@@ -55,11 +55,11 @@
     "#amzn = pd.read_csv('AMZN_CLOSE',index_col = 'Date', parse_dates=True)\n",
     "\n",
     "#These are real time data sets\n",
-    "AAPL_data = quandl.get(\"EOD/AAPL\", authtoken=\"KHzQ6zUks1kM3GUT6dcX\",start_date=start, end_date=end)\n",
-    "IBM_data = quandl.get(\"EOD/IBM\", authtoken=\"KHzQ6zUks1kM3GUT6dcX\", start_date=start, end_date=end)\n",
-    "AMZN_data = quandl.get(\"EOD/AMZN\", authtoken=\"KHzQ6zUks1kM3GUT6dcX\",start_date=start, end_date=end)\n",
-    "GOOGL_data = quandl.get(\"EOD/GOOGL\", authtoken=\"KHzQ6zUks1kM3GUT6dcX\",start_date=start, end_date=end)\n",
-    "#TSLA_data = quandl.get(\"EOD/TSLA\", authtoken=\"KHzQ6zUks1kM3GUT6dcX\",start_date=start, end_date=end)"
+    "AAPL_data = quandl.get(\"EOD/AAPL\", authtoken=\"\",start_date=start, end_date=end)\n",
+    "IBM_data = quandl.get(\"EOD/IBM\", authtoken=\"\", start_date=start, end_date=end)\n",
+    "AMZN_data = quandl.get(\"EOD/AMZN\", authtoken=\"\",start_date=start, end_date=end)\n",
+    "GOOGL_data = quandl.get(\"EOD/GOOGL\", authtoken=\"\",start_date=start, end_date=end)\n",
+    "#TSLA_data = quandl.get(\"EOD/TSLA\", authtoken=\"\",start_date=start, end_date=end)"
    ]
   },
   {
