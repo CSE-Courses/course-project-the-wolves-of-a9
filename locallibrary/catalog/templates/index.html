@@ -1,14 +1,623 @@
-{% extends "base_generic.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!-- JavaScript Library -->
+    <script src="../static/js/jquery.min_1.12.4.js"></script>
+    <script src="../static/js/modernizr-custom.js"></script>
+    <script src="../static/js/ie-checker.js"></script>
+    <script src="../static/js/swiper.min.js"></script>
+    <script>
+        //banner image slide
+        var mySwiper = new Swiper('.swiper-container', {
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                type: 'bullets',
+            },
+            autoplay: {
+                delay: 5000,
+            },
+        });
+        
+        //Stock Chart Image Slide
+        var mySwiper = new Swiper('.swiper-container2', {
+            slidesPerView: 4,
+            spaceBetween: 24,
+//            mousewheel: {
+//                invert: true,
+//            },
+            keyboard: {
+                enabled: true,
+                onlyInViewport: false,
+            },
+            autoplay: {
+                delay: 6000,
+            },
+        });
+        
+        //Stock Chart Tab Menu
+        var movBtn = $(".stock_title > ul > li");
+        var movCont = $(".stock_chart > div");
+        
+        movCont.hide().eq(0).show();
+        
+        movBtn.click(function(e){
+            e.preventDefault();
+            var target = $(this);
+            var index = target.index();
+            movBtn.removeClass("active");
+            target.addClass("active");
+            movCont.css("display","none");
+            movCont.eq(index).css("display","block");
+        });
+    </script>   
+   
+   
+   
+    <meta charset="UTF-8">
+    <!-- baisc setting. -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <!-- it reduces the ratio of screens to mobile screens. -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- button for use to select which rendering engine to use. if this is for app we don't need it -->
+    <meta name="author" content="wolves">
+    <meta name="description" content="Algorithm to identify the stock market">
+    <meta name="keywords" content="Stock, Photopolio, Algorithm, Theme, News, Learning">
+    <title>stock through algorithm</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/css/reset.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/swiper.css">
 
-{% block content %}
-  <h1>Local Library Home</h1>
-  <p>Welcome to LocalLibrary, a website developed by <em>Mozilla Developer Network</em>!</p>
-  <h2>Dynamic content</h2>
-  <p>The library has the following record counts:</p>
-  <ul>
-    <li><strong>Books:</strong> {{ num_books }}</li>
-    <li><strong>Copies:</strong> {{ num_instances }}</li>
-    <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
-    <li><strong>Authors:</strong> {{ num_authors }}</li>
-  </ul>
-{% endblock %}
+   
+    <!-- favicon  -->
+    <link rel="shortcut icon" href="../static/icons/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="../static/icons/favicon_72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="96x96" href="../static/icons/favicon_96.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../static/icons/favicon_144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="192x192" href="../static/icons/favicon_192.png" />
+
+    
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- HTLM5shiv ie6~8 -->
+    <!--[if lt IE 9]>
+    <script src="../static/js/html5shiv.min.js"></script>
+    <script type="text/javascript">
+        alert("The current browser is not supported. Chrome browser recommended!");
+    </script>
+    <![endif]-->
+    
+</head>
+<body>
+   
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="header clearfix">
+                    <h1>
+                        <a href="#">
+                            <em><img src="../static/img/logo1.png" alt="MEGABOX"></em>
+                            <strong><img src="../static/img/logo-sub1.png" alt="LIFE THEATER"></strong>
+                        </a>    
+                    </h1>
+                    <nav class="nav">
+                        <ul class="clearfix">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Theme</a></li>
+                            <li><a href="#">Watchlist</a></li>
+                            <li><a href="#">Board</a></li>
+                            <li><a href="#">Store</a></li>
+                            <li><a href="#">Event</a></li>
+                            <li><a href="#">Login</a></li>
+                        </ul>
+                    </nav>    
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- //header -->
+    
+          <section id="banner">
+        <h2 class="ir_so">up-to-date stock news</h2>
+        <div class="slider">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide ss1">
+                        <div class="container">
+                            <div class="row">
+                                <h2>Slide1 <em>Slide1</em></h2>
+                                <p>Slide1</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide ss2">
+                        <div class="container">
+                            <div class="row">
+                                <h2>Slide2 <em>Slide2</em></h2>
+                                <p>Slide2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide ss3">
+                        <div class="container">
+                            <div class="row">
+                                <h2>Slide3 <em>Slide3</em></h2>
+                                <p>Slide3</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+    <!-- //banner -->
+    
+
+        <!-- Stock Table -->
+    
+    <section id="table">
+        <div class="container">
+            <center>
+             <table style="width:80%">
+                 <tr>
+                    <th>Stock</th>
+                    <th>Price</th>
+                    <th>Chart</th>
+                 </tr>
+                  <tr>
+                      <td>AAPL</td>
+                      <td>124.72</td>
+                      <td><div id=><img src="../static/img/graph_scribble.png" alt="MEGABOX" width="50" height="80" class="chart"></td>
+                  </tr>
+            </table> 
+            </center>
+        </div>
+    </section>
+    
+    <!-- Stock Table -->
+    
+    
+    
+    <section id="stock">
+        <div class="container">
+            <div class="row">
+                <div class="stock">
+                    <h2 class="ir_so">Stock information</h2>
+                    <div class="stock_title">
+                        <ul>
+                            <li class="active"><a href="#">stocks</a></li>
+                            <li><a href="#">options</a></li>
+                            <li><a href="#">forex</a></li>
+                            <li><a href="#">crypto</a></li>
+                        </ul>
+                    </div>
+                    <div class="stock_chart">
+                        <div class="swiper-container2">
+                            <div class="chart_cont1 swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>1</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>2</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>3</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>4</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>5</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>6</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>7</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>8</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //chart_cont1-->
+                        <div class="swiper-container2">
+                            <div class="chart_cont2 swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>1</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>2</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>3</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>4</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>4</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>4</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //chart_cont2-->
+                        <div class="swiper-container2">
+                            <div class="chart_cont3 swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                    <figure>
+                                       <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                    </figure>
+                                    <div class="rank"><strong>1</strong></div>
+                                </div>
+                                    <div class="infor">
+                                    <h3><strong>stock name</strong></h3>
+                                    <div class="infor_btn">
+                                        <a href="#">Details</a>
+                                        <a href="#">Like</a>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                    <figure>
+                                        <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                    </figure>
+                                    <div class="rank"><strong>2</strong></div>
+                                </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>3</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>4</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>4</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>4</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //chart_cont3-->
+                        <div class="swiper-container2">
+                            <div class="chart_cont4 swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>1</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>2</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>3</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>4</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>4</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="poster">
+                                        <figure>
+                                            <img src="../static/img/graph1.jpg" srcset="../static/img/graph1@2.jpg 2x" alt="stock1">
+                                        </figure>
+                                        <div class="rank"><strong>4</strong></div>
+                                    </div>
+                                    <div class="infor">
+                                        <h3><strong>stock name</strong></h3>
+                                        <div class="infor_btn">
+                                            <a href="#">Details</a>
+                                            <a href="#">Like</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //chart_cont4-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //Stocks -->
+   
+    
+
+</body>
+</html>
