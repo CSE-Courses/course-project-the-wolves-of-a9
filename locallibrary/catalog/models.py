@@ -4,6 +4,30 @@ from django.db import models
 
 from django.urls import reverse  # To generate URLS by reversing URL patterns
 
+# THIS IS TAKEN FROM JASON'S BRANCH
+
+class Stock(models.Model):
+    ticker = models.CharField(max_length=5)
+    price = models.DecimalField(max_digits=8,decimal_places=2,null=True)
+    SharpeRatio = models.DecimalField(max_digits=8,decimal_places=2,null=True) #I have literally no clue what should be done to make a Sharpe Ratio.
+    SortinoRatio = models.DecimalField(max_digits=8,decimal_places=2,null=True) #Ditto.
+    date = models.DateTimeField(auto_now_add=True)
+    alpha = models.DecimalField(max_digits=10, decimal_places=8, null=True)
+    beta = models.DecimalField(max_digits=10, decimal_places=8, null=True)
+
+    def __str__(self):
+        return self.ticker
+
+    def assignSharpeRatio(self,weights_array,log_ret):
+        weights_array = weights_array / np.sum(weights_array)
+        exp_ret = np.sum((log_ret.mean() * weights * 252))
+        exp_vol = np.sqrt(np.dot(weights.T, np.dot(log_ret.cov() * 252, weights)))
+        SR = exp_ret / exp_vol
+        self.SharpeRatio = SR
+
+
+# THIS IS TAKEN FROM JASON'S BRANCH
+
 
 class Genre(models.Model):
     """Model representing a book genre (e.g. Science Fiction, Non Fiction)."""
