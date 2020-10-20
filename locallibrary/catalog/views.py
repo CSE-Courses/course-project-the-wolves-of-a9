@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from catalog.models import Book, Author, BookInstance, Genre
+from catalog.models import Book, Author, BookInstance, Genre, Stock
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
@@ -8,9 +8,8 @@ def index(request):
     """View function for home page of site."""
 
     # Generate counts of some of the main objects
-    num_books = Book.objects.all().count()
+    num_books = Stock.objects.all().count()
     num_instances = BookInstance.objects.all().count()
-    
     # Available books (status = 'a')
     num_instances_available = BookInstance.objects.filter(status__exact='a').count()
     
