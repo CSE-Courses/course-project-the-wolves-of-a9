@@ -27,4 +27,5 @@ urlpatterns = [
     path('', RedirectView.as_view(url='catalog/',permanent = True)),
     path('accounts/', include('django.contrib.auth.urls')),
     path('signup/', views.signup, name='signup'),
+    path('stock/<str:tickers>/', views.stock, name='tickers'),
 ]

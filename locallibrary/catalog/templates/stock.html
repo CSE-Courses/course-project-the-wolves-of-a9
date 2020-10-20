@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Wolves Den</h1>
+  <p>The stock: {{ tick }} has the following analysis:</p>
+  <ul>
+    <li><strong>Current Price:</strong> {{ price }}</li>
+    <li><strong>Alpha:</strong> {{ alpha }}</li>
+    <li><strong>Beta:</strong> {{ beta }}</li>
+    <li><strong>Sharpe Ratio:</strong> {{ sharpe }}</li>
+      <li><strong>Sortino Ratio:</strong> {{ sortino }}</li>
+  </ul>
+{% endblock %}

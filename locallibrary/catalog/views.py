@@ -26,6 +26,19 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
+
+def stock(request, tickers):
+    the_stock = Stock.objects.get(ticker=str(tickers))
+    context = {
+        'tick': the_stock.ticker,
+        'price': the_stock.price,
+        'alpha': the_stock.alpha,
+        'beta': the_stock.beta,
+        'sharpe': the_stock.sharpe_ratio,
+        'sortino': the_stock.sortino_ratio
+    }
+    return render(request,'stock.html', context=context)
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
