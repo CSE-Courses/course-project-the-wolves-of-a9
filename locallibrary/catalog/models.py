@@ -90,6 +90,9 @@ class UserStockOwnership(models.Model):
         return "{ticker}: {quantitys}".format(ticker=self.ticker.ticker,quantitys=self.quantity)
 
 
+
+
+
     #Define a way to calculate sharpe,sortino,alpha,beta of users portfolio.
 
 

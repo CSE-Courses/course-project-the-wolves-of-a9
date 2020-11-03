@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Wolves Den</h1>
+  <p>Your Portfolio contains the following stocks:</p>
+  <ul>
+    {% if user.is_authenticated and not user_has_stock %}
+        {% for stock in portfolio %}
+            <p>{{ stock }}</p>
+        {% endfor %}
+    {% endif %}
+  <ul>
+{% endblock %}

@@ -28,4 +28,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('signup/', views.signup, name='signup'),
     path('stock/<str:tickers>/', views.stock, name='tickers'),
+    path('stock/<str:tickers>/add', views.addStock),
+    path('portfolio/', views.portfolio,name='portfolio'),
 ]

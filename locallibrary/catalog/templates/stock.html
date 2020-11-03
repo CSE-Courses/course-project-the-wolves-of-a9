@@ -10,4 +10,9 @@
     <li><strong>Sharpe Ratio:</strong> {{ sharpe }}</li>
       <li><strong>Sortino Ratio:</strong> {{ sortino }}</li>
   </ul>
+    {% if user.is_authenticated and not user_has_stock %}
+    <form action='add' method='GET'>
+    <button type='submit'> Add stock to portfolio</button>
+    </form>
+    {% endif %}
 {% endblock %}
