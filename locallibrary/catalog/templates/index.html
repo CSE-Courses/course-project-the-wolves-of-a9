@@ -3,21 +3,6 @@
 {% block content %}
   <h1>The Wolves of A9 - Market Flow</h1>
   <p>Welcome to <em>Wolves</em>!</p>
-  <ul>
-  <table>
-    <tr>
-      <th>Stock</th>
-      <th>Price</th>
-      <th>Graph</th>
-    </tr>
-    {% for book in books %}
-      <tr>
-        <th><a href="/stock/{{ book.ticker }}">{{ book.ticker }}</a></th>
-        <th>${{ book.price }}</th>
-        <th> N/A </th>
-      </tr>
-    {% endfor %}
-   </ul>
-   </table>
+    {% include "stocklist.html" with stocks=books %}
 {% endblock %}
 
