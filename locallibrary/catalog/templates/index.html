@@ -3,9 +3,21 @@
 {% block content %}
   <h1>The Wolves of A9 - Market Flow</h1>
   <p>Welcome to <em>Wolves</em>!</p>
-  <h2>Dynamic content</h2>
-  <p>The website has the following record counts:</p>
   <ul>
-    <li><strong>Stocks in the database:</strong> {{ num_books }}</li>
-  </ul>
+  <table>
+    <tr>
+      <th>Stock</th>
+      <th>Price</th>
+      <th>Graph</th>
+    </tr>
+    {% for book in books %}
+      <tr>
+        <th><a href="/stock/{{ book.ticker }}">{{ book.ticker }}</a></th>
+        <th>${{ book.price }}</th>
+        <th> N/A </th>
+      </tr>
+    {% endfor %}
+   </ul>
+   </table>
 {% endblock %}
+

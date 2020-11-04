@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 
 def index(request):
     """View function for home page of site."""
-
+    # Generate list of stocks
+    books = Stock.objects.all()
     # Generate counts of some of the main objects
     num_books = Stock.objects.all().count()
     num_instances = BookInstance.objects.all().count()
@@ -17,6 +18,7 @@ def index(request):
     num_authors = Author.objects.count()
     
     context = {
+            'books': books,
         'num_books': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
