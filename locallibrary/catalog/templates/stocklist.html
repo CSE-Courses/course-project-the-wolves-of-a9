@@ -18,7 +18,7 @@ Including this file results in a list of stocks displayed on the page using the 
       <tr>
         <th><a href="/stock/{{ stock.ticker }}">{{ stock.ticker }}</a></th>
         <th>${{ stock.price }}</th>
-        <th>{% include "smallgraph.html" with stock=stock %}</th>
+        <th>{% include "smallgraph.html" with stock=stock history=history %}</th>
       </tr>
     {% endfor %}
 </table>

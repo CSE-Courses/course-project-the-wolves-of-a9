@@ -6,8 +6,21 @@ import numpy as np
 from pandas.plotting import scatter_matrix
 from scipy import stats
 from django.urls import reverse
-from datetime import datetime
+from datetime import timedelta
+from django.utils import timezone
+import datetime
 api_key = ""
+
+class StockHistory(models.Model):
+    ticker = models.CharField(max_length=5, unique=False)
+    open_price = models.DecimalField(max_digits=20,decimal_places=10,null=True)
+    close_price = models.DecimalField(max_digits=20,decimal_places=10,null=True)
+    high_price = models.DecimalField(max_digits=20,decimal_places=10,null=True)
+    low_price = models.DecimalField(max_digits=20,decimal_places=10,null=True)
+    adj_close = models.DecimalField(max_digits=20,decimal_places=10,null=True)
+    volume = models.DecimalField(max_digits=20,decimal_places=2,null=True)
+    
+    timestamp = models.DateTimeField(auto_now_add=False)
 
 class Stock(models.Model):
     ticker = models.CharField(max_length=5,unique=True)
@@ -76,6 +89,27 @@ class Stock(models.Model):
         else:
             pass
 
+    def get_history(self, period = 'day') :
+        end_date = timezone.now()
+        start_date = end_date - timedelta(days=1)
+        
+        if period == 'week' :
+            start_date = end_date - timedelta(days=7)
+        if period == 'month' :
+            start_date = end_date - timedelta(days=30)
+        if period == 'year' :
+            start_date = end_date - timedelta(days=365)
+
+        history = StockHistory.objects.filter(ticker=self.ticker).filter(timestamp__range=(start_date, end_date)).order_by('timestamp')
+        
+        return list(map(lambda x : {
+                "date":x.timestamp.isoformat().split('T')[0], 
+                "open_price": float(x.open_price), 
+                "close_price":float(x.close_price), 
+                "high_price":float(x.high_price), 
+                "low_price":float(x.low_price), 
+                "adj_close":float(x.adj_close) 
+            }, history))
 
 class UserStockOwnership(models.Model):
     ticker = models.ForeignKey(Stock, on_delete=models.CASCADE)

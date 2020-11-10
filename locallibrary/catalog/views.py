@@ -9,12 +9,19 @@ def index(request):
     """View function for home page of site."""
     # Generate list of stocks
     books = Stock.objects.all()
+
+    # Get history of all stocks during the past month
+    history = {}
+    for stock in Stock.objects.all() :
+        history[stock.ticker] = stock.get_history('month')
+
     # Generate counts of some of the main objects
     num_books = Stock.objects.all().count()
     
     context = {
             'books': books,
         'num_books': num_books,
+'history':history
     }
 
     # Render the HTML template index.html with the data in the context variable
@@ -28,6 +35,8 @@ def stock(request, tickers):
 
     if user.is_authenticated and user.stocks.filter(ticker=Stock.objects.get(ticker=str(tickers))).first():
         has_stock = True
+        
+    print(the_stock.get_history(period='year'))        
     context = {
         'tick': the_stock.ticker,
         'price': the_stock.price,
@@ -35,7 +44,9 @@ def stock(request, tickers):
         'beta': the_stock.beta,
         'sharpe': the_stock.sharpe_ratio,
         'sortino': the_stock.sortino_ratio,
-        'user_has_stock': has_stock
+        'user_has_stock': has_stock,
+        'price_history':  the_stock.get_history('year')
+
     }
 
     return render(request,'stock.html', context=context)
