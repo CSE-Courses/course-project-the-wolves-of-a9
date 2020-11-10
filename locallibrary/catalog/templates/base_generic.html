@@ -16,9 +16,6 @@
       {% block sidebar %}
         <ul class="sidebar-nav">
           <li><a href="{% url 'index' %}">Home</a></li>
-          <li><a href="/stock/AMD/">AMD</a></li>
-          <li><a href="/stock/AMZN/">AMZN</a></li>
-          <li><a href="/stock/NVDA/">NVDA</a></li>
             {% if user.is_authenticated %}
           <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
             {% endif %}
