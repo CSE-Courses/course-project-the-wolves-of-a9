@@ -30,4 +30,6 @@ urlpatterns = [
     path('stock/<str:tickers>/', views.stock, name='tickers'),
     path('stock/<str:tickers>/add', views.addStock),
     path('portfolio/', views.portfolio,name='portfolio'),
+    path('portfolio/delete/', views.removeStock),
+
 ]

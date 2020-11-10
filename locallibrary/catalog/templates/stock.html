@@ -11,7 +11,9 @@
       <li><strong>Sortino Ratio:</strong> {{ sortino }}</li>
   </ul>
     {% if user.is_authenticated and not user_has_stock %}
-    <form action='add' method='GET'>
+    <form action='add' method='POST'>
+    {% csrf_token %}
+    <input type="number" id="quantity" name="quantity"><br><br>
     <button type='submit'> Add stock to portfolio</button>
     </form>
     {% endif %}
