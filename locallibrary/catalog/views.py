@@ -7,11 +7,13 @@ from django.core.exceptions import ObjectDoesNotExist
 
 def index(request):
     """View function for home page of site."""
-
+    # Generate list of stocks
+    books = Stock.objects.all()
     # Generate counts of some of the main objects
     num_books = Stock.objects.all().count()
     
     context = {
+            'books': books,
         'num_books': num_books,
     }
 

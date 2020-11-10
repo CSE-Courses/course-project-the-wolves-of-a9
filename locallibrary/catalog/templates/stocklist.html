@@ -1,0 +1,25 @@
+
+<!--
+
+Stock List Template
+
+Including this file results in a list of stocks displayed on the page using the stock objects located in "stocks"
+
+-->
+
+<br>
+<table>
+    <tr>
+      <th>Stock</th>
+      <th>Price</th>
+      <th>Graph</th>
+    </tr>
+    {% for stock in stocks %}
+      <tr>
+        <th><a href="/stock/{{ stock.ticker }}">{{ stock.ticker }}</a></th>
+        <th>${{ stock.price }}</th>
+        <th>{% include "smallgraph.html" with stock=stock %}</th>
+      </tr>
+    {% endfor %}
+</table>
+</br>
