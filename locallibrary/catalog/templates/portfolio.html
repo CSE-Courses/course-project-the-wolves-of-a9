@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Wolves Den</h1>
+  <p>Your Portfolio contains the following stocks:</p>
+  <ul>
+    {% if user.is_authenticated and not user_has_stock %}
+        {% for stock in portfolio %}
+            <p>{{ stock }}</p>
+        {% endfor %}
+    {% endif %}
+    <p>Total Value: ${{ value }}</p>
+    {% if user.is_authenticated and length == 0 %}
+        <p> No stocks in your portfolio.</p>
+    {% endif %}
+    {% if user.is_authenticated and length != 0 %}
+    <form action='delete/' method='POST'>
+    {% csrf_token %}
+    <input type="text" id="tickers" name="tickers"><br><br>
+    <button type='submit'> Remove stock from portfolio</button>
+    </form>
+    {% endif %}
+
+  <ul>
+{% endblock %}

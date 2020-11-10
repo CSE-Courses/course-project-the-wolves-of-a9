@@ -8,8 +8,7 @@
   
   {% if next %}
     {% if user.is_authenticated %}
-      <p>Your account doesn't have access to this page. To proceed,
-      please login with an account that has access.</p>
+      <p>Your account doesn't have access to this page.</p>
     {% else %}
       <p>Please login to see this page.</p>
     {% endif %}
@@ -30,8 +29,7 @@
     <input type="submit" value="login" />
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
-  
-  {# Assumes you setup the password_reset view in your URLconf #}
+
   <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
   
 {% endblock %}
