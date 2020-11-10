@@ -1,9 +1,17 @@
 import smtplib
+import json
+import os
 from os.path import basename
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 
+
+FILENAME = os.getcwd() + r'/secret/passwords.json'
+
+def getpassword(filename):
+    with open(filename) as f:
+        return json.load(f)["email"]
 
 #param: recipients: a list of email addresses as strings
 #param: subject: a string to be the subject of the email
@@ -16,7 +24,7 @@ class Email():
         self.subject = subject
         self.message = message
         self.attachments = attachments
-        self.password = ''
+        self.password = getpassword(FILENAME)
         self.sender = 'wolves.financials@gmail.com'
 
     def send(self):
