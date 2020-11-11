@@ -3,9 +3,6 @@
 {% block content %}
   <h1>The Wolves of A9 - Market Flow</h1>
   <p>Welcome to <em>Wolves</em>!</p>
-  <h2>Dynamic content</h2>
-  <p>The website has the following record counts:</p>
-  <ul>
-    <li><strong>Stocks in the database:</strong> {{ num_books }}</li>
-  </ul>
+    {% include "stocklist.html" with stocks=books history=history %}
 {% endblock %}
+

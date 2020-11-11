@@ -1,26 +1,27 @@
 from django.shortcuts import render
-from catalog.models import Book, Author, BookInstance, Genre, Stock
+from catalog.models import Stock
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
 
 def index(request):
     """View function for home page of site."""
+    # Generate list of stocks
+    books = Stock.objects.all()
+
+    # Get history of all stocks during the past month
+    history = {}
+    for stock in Stock.objects.all() :
+        history[stock.ticker] = stock.get_history('month')
 
     # Generate counts of some of the main objects
     num_books = Stock.objects.all().count()
-    num_instances = BookInstance.objects.all().count()
-    # Available books (status = 'a')
-    num_instances_available = BookInstance.objects.filter(status__exact='a').count()
-    
-    # The 'all()' is implied by default.    
-    num_authors = Author.objects.count()
     
     context = {
+            'books': books,
         'num_books': num_books,
-        'num_instances': num_instances,
-        'num_instances_available': num_instances_available,
-        'num_authors': num_authors,
+'history':history
     }
 
     # Render the HTML template index.html with the data in the context variable
@@ -29,15 +30,71 @@ def index(request):
 
 def stock(request, tickers):
     the_stock = Stock.objects.get(ticker=str(tickers))
+    has_stock = False
+    user = request.user
+
+    if user.is_authenticated and user.stocks.filter(ticker=Stock.objects.get(ticker=str(tickers))).first():
+        has_stock = True
+        
+    print(the_stock.get_history(period='year'))        
     context = {
         'tick': the_stock.ticker,
         'price': the_stock.price,
         'alpha': the_stock.alpha,
         'beta': the_stock.beta,
         'sharpe': the_stock.sharpe_ratio,
-        'sortino': the_stock.sortino_ratio
+        'sortino': the_stock.sortino_ratio,
+        'user_has_stock': has_stock,
+        'price_history':  the_stock.get_history('year')
+
     }
+
     return render(request,'stock.html', context=context)
+
+
+def portfolio(request):
+    returned_portfolio = []
+    value = 0
+    for x in request.user.stocks.all():
+        returned_portfolio.append(str(x))
+        value += x.ticker.price * x.quantity
+    context = {
+        'portfolio': returned_portfolio,
+        'length': len(returned_portfolio),
+        'value': value
+    }
+    return render(request,'portfolio.html',context=context)
+
+
+def addStock(request,tickers):
+    quantity = 0
+    if request.method == "POST":
+        quantity=request.POST["quantity"]
+    the_stock = Stock.objects.get(ticker=str(tickers))
+    user = request.user
+    user.stocks.create(ticker=the_stock,quantity=quantity)
+    user.save()
+    return stock(request,tickers)
+
+
+def removeStock(request):
+    user = request.user
+    if request.method == "POST":
+        tickers = request.POST["tickers"]
+        try:
+            user.stocks.get(ticker=Stock.objects.get(ticker=tickers))
+        except ObjectDoesNotExist:
+            return redirect('portfolio')
+        user.stocks.get(ticker=Stock.objects.get(ticker=tickers.upper())).delete()
+        user.save()
+        returned_portfolio = []
+        for x in request.user.stocks.all():
+            returned_portfolio.append(str(x))
+        context = {
+            'portfolio': returned_portfolio,
+            'length': len(returned_portfolio)
+        }
+        return redirect('portfolio')
 
 def signup(request):
     if request.method == 'POST':
