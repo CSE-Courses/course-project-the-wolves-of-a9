@@ -9,7 +9,8 @@ from django.urls import reverse
 from datetime import timedelta
 from django.utils import timezone
 import datetime
-api_key = ""
+api_key = "fCvBzcozBdBngMckne8C"
+
 
 class StockHistory(models.Model):
     ticker = models.CharField(max_length=5, unique=False)
@@ -21,6 +22,7 @@ class StockHistory(models.Model):
     volume = models.DecimalField(max_digits=20,decimal_places=2,null=True)
     
     timestamp = models.DateTimeField(auto_now_add=False)
+
 
 class Stock(models.Model):
     ticker = models.CharField(max_length=5,unique=True)

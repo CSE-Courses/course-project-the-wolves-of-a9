@@ -31,5 +31,6 @@ urlpatterns = [
     path('stock/<str:tickers>/add', views.addStock),
     path('portfolio/', views.portfolio,name='portfolio'),
     path('portfolio/delete/', views.removeStock),
+    path('stock/<str:tickers>/change', views.changeStock),
 
 ]

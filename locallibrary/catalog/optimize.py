@@ -17,7 +17,7 @@ from scipy import stats
 from scipy.optimize import minimize
 
 get_ipython().run_line_magic('matplotlib', 'inline')
-quandl.ApiConfig.api_key = "kzWkeovNCgEg9Ry9TexQ"
+quandl.ApiConfig.api_key = "fCvBzcozBdBngMckne8C "
 
 from jupyterthemes import jtplot
 jtplot.style(theme='monokai', context='notebook', ticks=True, grid=False)
@@ -28,7 +28,7 @@ jtplot.style(theme='monokai', context='notebook', ticks=True, grid=False)
 
 start = pd.to_datetime('2000-11-03')
 end = pd.to_datetime('2020-11-03')
-api_key = 'kzWkeovNCgEg9Ry9TexQ'
+api_key = 'fCvBzcozBdBngMckne8C '
 #These are real time data sets
 #AAPL_data = quandl.get("EOD/AAPL", authtoken=api_key,start_date=start, end_date=end)
 
