@@ -103,4 +103,11 @@
     <button type='submit'> Add stock to portfolio</button>
     </form>
     {% endif %}
+    {% if user.is_authenticated and user_has_stock %}
+    <form action='change' method='POST'>
+    {% csrf_token %}
+    <input type="number" id="quantity" name="quantity"><br><br>
+    <button type='submit'> Change quantity</button>
+    </form>
+    {% endif %}
 {% endblock %}
