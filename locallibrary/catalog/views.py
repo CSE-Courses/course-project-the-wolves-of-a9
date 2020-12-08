@@ -29,6 +29,10 @@ def index(request):
 
 
 def stock(request, tickers):
+    period = 'year'
+    if "period" in request.GET.keys() :
+        if request.GET["period"] in ["week", "day", "year", "month"] :
+            period = request.GET["period"]
     the_stock = Stock.objects.get(ticker=str(tickers))
     has_stock = False
     user = request.user
