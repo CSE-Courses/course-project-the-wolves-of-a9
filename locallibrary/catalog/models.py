@@ -91,7 +91,7 @@ class Stock(models.Model):
         else:
             pass
 
-    def get_history(self, period = 'day') :
+    def get_history(self, period = 'day'):
         end_date = timezone.now()
         start_date = end_date - timedelta(days=1)
         

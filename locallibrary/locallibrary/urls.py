@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
+from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
 from catalog import views
@@ -32,5 +33,10 @@ urlpatterns = [
     path('portfolio/', views.portfolio,name='portfolio'),
     path('portfolio/delete/', views.removeStock),
     path('stock/<str:tickers>/change', views.changeStock),
+    path('logout/', LogoutView.as_view(), name="logout"),
+    path('catalog/search', views.search, name="search"),
+    path('stock/<str:tickers>/search/', views.search, name="search"),
+    path('portfolio/search', views.search, name="search"),
+
 
 ]

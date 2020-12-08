@@ -53,10 +53,10 @@ def stock(request, tickers):
 
 
 def portfolio(request):
-    returned_portfolio = []
+    returned_portfolio = {}
     value = 0
     for x in request.user.stocks.all():
-        returned_portfolio.append(str(x))
+        returned_portfolio[x.ticker] = x.quantity
         value += x.ticker.price * x.quantity
     context = {
         'portfolio': returned_portfolio,
@@ -133,3 +133,17 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+def logout(request):
+    return render(request,'logged_out.html')
+    #return redirect('index')
+
+def search(request):
+    if request.method == 'POST':
+        ticker = request.POST["ticker"] if str(request.POST["ticker"]) else 0
+        if ticker is 0 or Stock.objects.filter(ticker=ticker.upper()).first() is None:
+            return redirect('index')
+
+        return stock(request, ticker)
+
+

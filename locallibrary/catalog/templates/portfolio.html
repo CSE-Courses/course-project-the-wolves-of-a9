@@ -5,10 +5,13 @@
   <p>Your Portfolio contains the following stocks:</p>
   <ul>
     {% if user.is_authenticated and not user_has_stock %}
-        {% for stock in portfolio %}
-            <p>{{ stock }}</p>
+        {% for key,value in portfolio.items %}
+            <li><a href="/stock/{{ key }}">{{key}}</a>: {{value}}</li>
         {% endfor %}
     {% endif %}
+
+  <br>
+
     <p>Total Value: ${{ value }}</p>
     {% if user.is_authenticated and length == 0 %}
         <p> No stocks in your portfolio.</p>
