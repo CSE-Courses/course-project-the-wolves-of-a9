@@ -7,19 +7,24 @@ Including this file results in a list of stocks displayed on the page using the 
 
 -->
 
+<script src="https://kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <br>
-<table>
-    <tr>
-      <th>Stock</th>
-      <th>Price</th>
-      <th>Graph</th>
-    </tr>
+<table class="sortable">
+    <thead>
+        <tr>
+          <th>Stock</th>
+          <th>Price</th>
+          <th>Graph</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for stock in stocks %}
       <tr>
-        <th><a href="/stock/{{ stock.ticker }}">{{ stock.ticker }}</a></th>
-        <th>${{ stock.price }}</th>
-        <th>{% include "smallgraph.html" with stock=stock history=history %}</th>
+        <td><a href="/stock/{{ stock.ticker }}">{{ stock.ticker }}</a></td>
+        <td>${{ stock.price }}</td>
+        <td>{% include "smallgraph.html" with stock=stock history=history %}</td>
       </tr>
     {% endfor %}
+    </tbody>
 </table>
 </br>
