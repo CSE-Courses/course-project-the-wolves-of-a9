@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import LETTER
 from reportlab.lib.units import inch, cm
@@ -11,11 +12,7 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, PageBreak
 from datetime import date
 #from scheduler.emailservice.NewsPull import pull_news
 
-FILENAME = os.getcwd() + r'/secret/apikeys.json'
-
-def getkey(filename):
-    with open(filename) as f:
-        return json.load(f)["news"]
+from secret.protected import news_key
 
 #return: news: a 2D list of news articles to be later formatted as a pdf in NewsReport.py
 def pull_news():
@@ -26,7 +23,7 @@ def pull_news():
 
     headers = {
         'x-rapidapi-host': "bloomberg-market-and-financial-news.p.rapidapi.com",
-        'x-rapidapi-key': getkey(FILENAME)
+        'x-rapidapi-key': news_key
     }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
