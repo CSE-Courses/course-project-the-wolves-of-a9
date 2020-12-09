@@ -10,85 +10,90 @@
     <li><strong>Sharpe Ratio:</strong> {{ sharpe }}</li>
       <li><strong>Sortino Ratio:</strong> {{ sortino }}</li>
     <li><strong>Price History: </strong></br> 
-      <svg width="800" height="500"></svg>
+      <div id='graph' style="height: 500; width: 800;"></div>
       <script type="text/javascript">
           var price_history = {{ price_history|safe }};
-          
-          // svg tag selection
-          var svg = d3.select("svg"), 
-          
-          // Graph sets Margin
-          margin = {top: 20, right: 20, bottom: 30, left: 50},
-          
-          // Exclude both margins from total width
-          width = +svg.attr("width") - margin.left - margin.right, 
-          
-          // Exclude up and down margins from total heigth
-          height = +svg.attr("height") - margin.top - margin.bottom,
-          
-          //<g>Tag and attribute in svg <g transform="translate(50,20)">
-          g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-          
-          //time parsing function
-          var parseTime = d3.timeParse("%d-%b-%y");
-
-          //x is time area 0~width
-          var x = d3.scaleTime().rangeRound([0, width]);
-          
-          //y is a linear sequential time range height~0
-          //The y-axis is at the top of the left (0,0). Figure so that as y increases, it goes down.
-          var y = d3.scaleLinear().rangeRound([height, 0]);
-            
 
           // Function to parse data
-          function parsing_data(data){  
-            ret_val = []; 
+          function parsing_data(data){
+            date_arr = [];
+            close_arr = [];
+            open_arr = [];
+            adj_close_arr = [];
+            high_arr = [];
+            low_arr = [];
+            
             var x;
-            for (x in data) {
-              var temp = {"date":new Date(data[x].date), "close":data[x].close_price}
-              ret_val.push(temp); 
-            } 
-            return ret_val;
-          };
+            for (x in data){
+              date_arr.push(data[x].date);
+              close_arr.push(data[x].close_price);
+              open_arr.push(data[x].open_price);
+              adj_close_arr.push(data[x].adj_close);
+              high_arr.push(data[x].high_price);
+              low_arr.push(data[x].low_price);
+            }
+
+            return [date_arr, close_arr, open_arr, adj_close_arr, high_arr, low_arr];
+          }
           
           // Store parsed data in a variable called data
-          var data = parsing_data(price_history);
-          console.log(data);
+          [date, close_price, open_price, adj_close_price, high_price, low_price] = parsing_data(price_history);
 
-          x.domain(d3.extent(data, function(d) { return d.date; }));
-          y.domain(d3.extent(data, function(d) { return d.close; }));
+          var trace1 = {
+            type: "scatter",
+            mode: "lines",
+            name: "close price",
+            x: date,
+            y: close_price,
+            line: {color: '#FF0000'}
+          }
 
-          //x-axis
-            g.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x))
-              .select(".domain")
-                .remove();
-          //y-axis
-            g.append("g")
-                .call(d3.axisLeft(y))
-              .append("text")
-                .attr("fill", "#000")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 6)
-                .attr("dy", "0.71em")
-                .attr("text-anchor", "end")
-                .text("Price ($)");
+          var trace2 = {
+            type: "scatter",
+            mode: "lines",
+            name: "open price",
+            x: date,
+            y: open_price,
+            line: {color: '#00FF00'}
+          }
+          var trace3 = {
+            type: "scatter",
+            mode: "lines",
+            name: "adj_close price",
+            x: date,
+            y: adj_close_price,
+            line: {color: '#0000FF'}
+          }
+          var trace4 = {
+            type: "scatter",
+            mode: "lines",
+            name: "high price",
+            x: date,
+            y: high_price,
+            line: {color: '#000F0F'}
+          }
           
-          // graph
-          var line = d3.line()
-              .x(function(d) { return x(d.date); })
-              .y(function(d) { return y(d.close); });
-            
-            g.append("path")
-            .datum(data)
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-linecap", "round")
-            .attr("stroke-width", 1.5)
-            .attr("d", line);
+          var trace5 = {
+            type: "scatter",
+            mode: "lines",
+            name: "low price",
+            x: date,
+            y: low_price,
+            line: {color: '#17BECF'}
+          }
+
+          var data = [trace1, trace2, trace3, trace4, trace5];
+
+          var layout = {
+            title: "{{ tick }}",
+          };
+
+          Plotly.newPlot('graph', data, layout);
+
       </script>
+      <a class="btn btn-primary" href="/stock/{{ tick }}?period=year">year</a>
+      <a class="btn btn-primary" href="/stock/{{ tick }}?period=month">month</a>
+      <a class="btn btn-primary" href="/stock/{{ tick }}?period=week">week</a>
     </li>
   </ul>
     {% if user.is_authenticated and not user_has_stock %}
@@ -96,6 +101,13 @@
     {% csrf_token %}
     <input type="number" id="quantity" name="quantity"><br><br>
     <button type='submit'> Add stock to portfolio</button>
+    </form>
+    {% endif %}
+    {% if user.is_authenticated and user_has_stock %}
+    <form action='change' method='POST'>
+    {% csrf_token %}
+    <input type="number" id="quantity" name="quantity"><br><br>
+    <button type='submit'> Change quantity</button>
     </form>
     {% endif %}
 {% endblock %}

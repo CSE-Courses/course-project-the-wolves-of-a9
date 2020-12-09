@@ -29,6 +29,10 @@ def index(request):
 
 
 def stock(request, tickers):
+    period = 'year'
+    if "period" in request.GET.keys() :
+        if request.GET["period"] in ["week", "day", "year", "month"] :
+            period = request.GET["period"]
     the_stock = Stock.objects.get(ticker=str(tickers))
     has_stock = False
     user = request.user
@@ -53,10 +57,10 @@ def stock(request, tickers):
 
 
 def portfolio(request):
-    returned_portfolio = []
+    returned_portfolio = {}
     value = 0
     for x in request.user.stocks.all():
-        returned_portfolio.append(str(x))
+        returned_portfolio[x.ticker] = x.quantity
         value += x.ticker.price * x.quantity
     context = {
         'portfolio': returned_portfolio,
@@ -69,12 +73,15 @@ def portfolio(request):
 def addStock(request,tickers):
     quantity = 0
     if request.method == "POST":
-        quantity=request.POST["quantity"]
+        quantity=request.POST["quantity"] if int(request.POST["quantity"]) > 0 else None
+    if quantity is None:
+        return stock(request,tickers)
     the_stock = Stock.objects.get(ticker=str(tickers))
     user = request.user
     user.stocks.create(ticker=the_stock,quantity=quantity)
     user.save()
     return stock(request,tickers)
+
 
 
 def removeStock(request):
@@ -87,6 +94,27 @@ def removeStock(request):
             return redirect('portfolio')
         user.stocks.get(ticker=Stock.objects.get(ticker=tickers.upper())).delete()
         user.save()
+        returned_portfolio = []
+        for x in request.user.stocks.all():
+            returned_portfolio.append(str(x))
+        context = {
+            'portfolio': returned_portfolio,
+            'length': len(returned_portfolio)
+        }
+        return redirect('portfolio')
+
+def changeStock(request,tickers):
+    user = request.user
+    if request.method == "POST":
+        quantity = request.POST["quantity"] if int(request.POST["quantity"]) > 0 else None
+        if quantity is None: return redirect('portfolio')
+        try:
+            user.stocks.get(ticker=Stock.objects.get(ticker=tickers))
+        except ObjectDoesNotExist:
+            return redirect('portfolio')
+        the_stock = user.stocks.get(ticker=Stock.objects.get(ticker=tickers.upper()))
+        the_stock.quantity = quantity
+        the_stock.save()
         returned_portfolio = []
         for x in request.user.stocks.all():
             returned_portfolio.append(str(x))
@@ -109,3 +137,17 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+def logout(request):
+    return render(request,'logged_out.html')
+    #return redirect('index')
+
+def search(request):
+    if request.method == 'POST':
+        ticker = request.POST["ticker"] if str(request.POST["ticker"]) else 0
+        if ticker is 0 or Stock.objects.filter(ticker=ticker.upper()).first() is None:
+            return redirect('index')
+
+        return stock(request, ticker)
+
+

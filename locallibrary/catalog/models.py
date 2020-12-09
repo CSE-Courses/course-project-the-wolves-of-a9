@@ -9,7 +9,8 @@ from django.urls import reverse
 from datetime import timedelta
 from django.utils import timezone
 import datetime
-api_key = ""
+from secret.protected import quandl_key
+api_key = quandl_key
 
 class StockHistory(models.Model):
     ticker = models.CharField(max_length=5, unique=False)
@@ -19,7 +20,7 @@ class StockHistory(models.Model):
     low_price = models.DecimalField(max_digits=20,decimal_places=10,null=True)
     adj_close = models.DecimalField(max_digits=20,decimal_places=10,null=True)
     volume = models.DecimalField(max_digits=20,decimal_places=2,null=True)
-    
+
     timestamp = models.DateTimeField(auto_now_add=False)
 
 class Stock(models.Model):
@@ -92,7 +93,7 @@ class Stock(models.Model):
     def get_history(self, period = 'day') :
         end_date = timezone.now()
         start_date = end_date - timedelta(days=1)
-        
+
         if period == 'week' :
             start_date = end_date - timedelta(days=7)
         if period == 'month' :
@@ -101,14 +102,14 @@ class Stock(models.Model):
             start_date = end_date - timedelta(days=365)
 
         history = StockHistory.objects.filter(ticker=self.ticker).filter(timestamp__range=(start_date, end_date)).order_by('timestamp')
-        
+
         return list(map(lambda x : {
-                "date":x.timestamp.isoformat().split('T')[0], 
-                "open_price": float(x.open_price), 
-                "close_price":float(x.close_price), 
-                "high_price":float(x.high_price), 
-                "low_price":float(x.low_price), 
-                "adj_close":float(x.adj_close) 
+                "date":x.timestamp.isoformat().split('T')[0],
+                "open_price": float(x.open_price),
+                "close_price":float(x.close_price),
+                "high_price":float(x.high_price),
+                "low_price":float(x.low_price),
+                "adj_close":float(x.adj_close)
             }, history))
 
 class UserStockOwnership(models.Model):
@@ -122,8 +123,3 @@ class UserStockOwnership(models.Model):
 
     def __str__(self):
         return "{ticker}: {quantitys}".format(ticker=self.ticker.ticker,quantitys=self.quantity)
-
-
-
-
-
